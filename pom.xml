@@ -154,6 +154,13 @@
 			<version>${gae.version}</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Groovy -->
+		<dependency>
+			<groupId>org.codehaus.groovy.maven.runtime</groupId>
+			<artifactId>gmaven-runtime-1.6</artifactId>
+			<version>1.0</version> <!-- TODO property -->
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -302,6 +309,23 @@
 					<source>1.6</source>
 					<target>1.6</target>
 				</configuration>
+			</plugin>
+
+			<!-- Groovy -->
+			<plugin>
+			<groupId>org.codehaus.groovy.maven</groupId>
+			<artifactId>gmaven-plugin</artifactId>
+			<version>1.0</version> <!-- TODO property -->
+			<executions>
+			<execution>
+			<goals>
+			<goal>generateStubs</goal>
+			<goal>compile</goal>
+			<goal>generateTestStubs</goal>
+			<goal>testCompile</goal>
+			</goals>
+			</execution>
+			</executions>
 			</plugin>
 		</plugins>
 	</build>
