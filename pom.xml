@@ -16,20 +16,38 @@
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
-			<version>1.0-SP4</version>
+			<version>${cdi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.weld</groupId>
+			<artifactId>weld-api</artifactId>
+			<scope>runtime</scope>
+			<version>${weld.api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.weld</groupId>
+			<artifactId>weld-spi</artifactId>
+			<scope>runtime</scope>
+			<version>${weld.api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.weld</groupId>
+			<artifactId>weld-core</artifactId>
+			<scope>runtime</scope>
+			<version>${weld.impl.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.weld.servlet</groupId>
-			<artifactId>weld-servlet</artifactId>
+			<artifactId>weld-servlet-core</artifactId>
 			<scope>runtime</scope>
-			<version>${weld.servlet.version}</version>
+			<version>${weld.impl.version}</version>
 		</dependency>
 
 		<!-- Google App Engine meta-package -->
 		<dependency>
 			<groupId>javax.jdo</groupId>
 			<artifactId>jdo2-api</artifactId>
-			<version>2.3-ea</version>
+			<version>2.3-eb</version>
 		</dependency>
 		<dependency>
 			<groupId>net.kindleit</groupId>
@@ -38,11 +56,13 @@
 			<type>pom</type>
 		</dependency>
 
+        <!--
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
-			<version>1.1</version>
+			<version>1.1</version> <!- - TODO - zaktualizovat - ->
 		</dependency>
+		-->
 
 		<!-- GWT dependencies -->
 		<dependency>
@@ -63,7 +83,7 @@
 		<dependency>
 			<groupId>org.apache.geronimo.specs</groupId>
 			<artifactId>geronimo-servlet_2.5_spec</artifactId>
-			<version>1.2</version>
+			<version>1.2</version> <!-- TODO - zaktualizovat -->
 			<scope>provided</scope>
 		</dependency>
 
@@ -72,7 +92,7 @@
 			<artifactId>standard</artifactId>
 			<groupId>taglibs</groupId>
 			<version>1.1.2</version>
-			<type>jar</type>
+			<type>jar</type> <!-- TODO - zaktualizovat -->
 			<scope>runtime</scope>
 		</dependency>
 
@@ -80,20 +100,36 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.6.1</version>
+			<version>${slf4j.version}</version>
 		</dependency>
+		<!--
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jdk14</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		-->
 
+		<!--
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>0.9.24</version>
+			<version>0.9.24</version> <!- - TODO - zaktualizovat - ->
+            <exclusions>
+				<!- - problem s weld, ktery ma v sobe spoustu knihoven :-( - ->
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
 		</dependency>
+		-->
 
 		<!-- Test scope -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.5</version>
+			<version>4.8.2</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -122,8 +158,7 @@
 
 	<build>
 		<plugins>
-			<!-- This plug-in "enhances" your domain model objects (i.e. makes them persistent for
-					datanucleus) -->
+			<!-- This plug-in "enhances" your domain model objects (i.e. makes them persistent for datanucleus) -->
 			<plugin>
 				<groupId>org.datanucleus</groupId>
 				<artifactId>maven-datanucleus-plugin</artifactId>
@@ -171,7 +206,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1-beta-1</version>
+				<!--<version>2.1-beta-1</version>-->
 				<configuration>
 					<webResources>
 						<resource>
@@ -190,8 +225,8 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
-				<version>2.1.0-1</version>
-				<configuration>
+				<version>${gwt.plugin.version}</version>
+				<configuration> <!-- TODO - zaktualizovat -->
 					<logLevel>INFO</logLevel>
 
 					<!-- match -Dgae.port -->
@@ -211,8 +246,7 @@
 
 					<!-- TODO This should help running GAE stuff in hosted mode (when gwt-maven-plugin-1.2
 								is released, see http://jira.codehaus.org/browse/MGWT-112) -->
-					<server>com.google.appengine.tools.development.gwt.AppEngineLauncher
-					</server>
+					<server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
 
 					<runTarget>/index.html</runTarget>
 					<style>DETAILED</style>
@@ -240,7 +274,7 @@
 			<plugin>
 				<groupId>net.kindleit</groupId>
 				<artifactId>maven-gae-plugin</artifactId>
-				<version>0.8.1</version>
+				<version>${gae.plugin.version}</version>
 				<dependencies>
 					<dependency>
 						<groupId>net.kindleit</groupId>
@@ -263,7 +297,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.0</version>
+				<!--<version>2.0</version>-->
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
@@ -275,17 +309,21 @@
 	<!-- Specify hard-coded project properties here -->
 	<properties>
 		<!-- WELD -->
-		<weld.servlet.version>1.0.1-Final</weld.servlet.version>
+		<cdi.version>1.0-SP4</cdi.version>
+		<weld.api.version>1.1.Final</weld.api.version>
+		<weld.impl.version>1.1.1.Final</weld.impl.version>
 
 		<!-- This is just for "eclipse:eclipse" goal to always attempt downloading sources -->
 		<downloadSources>true</downloadSources>
 
 		<!-- Specify AppEngine version for your project. It should match SDK version pointed to
 			  by ${gae.home} property (Typically, one used by your Eclipse plug-in) -->
-		<gae.version>1.4.0</gae.version>
+		<gae.version>1.5.1</gae.version>
+		<gae.plugin.version>0.8.4</gae.plugin.version>
 
 		<!-- GWT version -->
-		<gwt.version>2.1.1</gwt.version>
+		<gwt.version>2.3.0</gwt.version>
+		<gwt.plugin.version>2.3.0</gwt.plugin.version>
 
 		<!-- Upload to http://test.latest.<applicationName>.appspot.com by default -->
 		<gae.application.version>test</gae.application.version>
@@ -295,10 +333,17 @@
 
 		<!-- Produce detailed JS during GWT compilation for development environment -->
 		<gwt.style>DETAILED</gwt.style>
+
+		<!-- others -->
+		<slf4j.version>1.6.1</slf4j.version>
+		<!--
+		<slf4j.version>1.5.11</slf4j.version>
+		-->
 	</properties>
 
 	<profiles>
-
+		<!-- TODO - zaktualizovat -->
+		
 		<!-- We can configure our integration server to activate this profile and perform gae:deploy,
 			  thus uploading latest snapshot to the http://1.latest.<applicationName>.appspot.com automatically -->
 		<profile>
